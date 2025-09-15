@@ -16,6 +16,7 @@ namespace BTAF.Service
             {
                 Debug.Print("Id={0}; Name={1}", ad.Id, ad.Name);
             }
+            ServiceControl.Stop();
             Debug.Print("## Debug session end");
 #else
             ServiceBase[] ServicesToRun;
