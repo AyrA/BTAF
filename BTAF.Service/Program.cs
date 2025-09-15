@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
+using BTAF.Lib;
 
 namespace BTAF.Service
 {
@@ -14,12 +10,21 @@ namespace BTAF.Service
         /// </summary>
         static void Main()
         {
+#if DEBUG
+            Debug.Print("## Debug session start");
+            foreach (var ad in AudioDevices.GetDeviceNames())
+            {
+                Debug.Print("Id={0}; Name={1}", ad.Id, ad.Name);
+            }
+            Debug.Print("## Debug session end");
+#else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
                 new BTAFService()
             };
             ServiceBase.Run(ServicesToRun);
+#endif
         }
     }
 }
