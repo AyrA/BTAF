@@ -11,7 +11,30 @@ namespace BTAF.Lib
             Disabled,
             Manual
         }
+
         private const string ServiceName = "BTAGService";
+
+        public static bool IsEnabled
+        {
+            get
+            {
+                using (var s = GetService())
+                {
+                    return s.StartType != ServiceStartMode.Disabled;
+                }
+            }
+        }
+
+        public static bool IsRunning
+        {
+            get
+            {
+                using (var s = GetService())
+                {
+                    return s.Status == ServiceControllerStatus.StartPending || s.Status == ServiceControllerStatus.Running;
+                }
+            }
+        }
 
         public static void Disable()
         {
