@@ -27,13 +27,14 @@ namespace BTAF.Service
                         break;
 #if DEBUG
                     case "/TEST":
+                        //AudioDeviceEnumerator.EnumerateDevices();
                         break;
 #endif
                 }
             }
 #if DEBUG
             Debug.Print("## Debug session start");
-            foreach (var ad in AudioDevices.GetDeviceNames())
+            foreach (var ad in AudioDeviceEnumerator.EnumerateDevices(true))
             {
                 Debug.Print("Id={0}; Name={1}", ad.Id, ad.Name);
             }

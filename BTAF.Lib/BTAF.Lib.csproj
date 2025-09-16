@@ -45,12 +45,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioDevice.cs" />
+    <Compile Include="AudioDeviceEnumerator.cs" />
     <Compile Include="AudioDevices.cs" />
+    <Compile Include="Interop\Blob.cs" />
+    <Compile Include="Interop\ClsCtx.cs" />
+    <Compile Include="Interop\EDataFlow.cs" />
+    <Compile Include="Interop\EDeviceState.cs" />
+    <Compile Include="Interop\ERole.cs" />
+    <Compile Include="Interop\Guids.cs" />
+    <Compile Include="Interop\IMMDevice.cs" />
+    <Compile Include="Interop\IMMDeviceCollection.cs" />
+    <Compile Include="Interop\IMMDeviceEnumerator.cs" />
+    <Compile Include="Interop\IMMNotificationClient.cs" />
+    <Compile Include="Interop\IPropertyStore.cs" />
+    <Compile Include="Interop\NativeMethods.cs" />
+    <Compile Include="Interop\PropertyKey.cs" />
+    <Compile Include="Interop\PropVariant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceInstallHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ServiceControl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
