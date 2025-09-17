@@ -82,7 +82,7 @@ namespace BTAF.Lib
                 var createArgs = new object[] {
                     ServiceName,
                     "Bluetooth Audio Fix",
-                    GetExeFileName(),
+                    $"\"{GetExeFileName()}\"", //Exe name should be in quotes in case the path contains spaces
                     16, //"Own Process" service type
                     0, //No special error handling
                     "Automatic", //Start mode
@@ -129,7 +129,7 @@ namespace BTAF.Lib
                 {
                     var desc = new ServiceDescriptionW()
                     {
-                        lpDescription = "Takes control of the bluetooth audio gateway service to fix faulty audio implementation in Windows 11"
+                        lpDescription = "Takes control of the bluetooth audio gateway service to fix faulty audio implementation in Windows 11 | https://github.com/AyrA/BTAF"
                     };
                     IntPtr mem = Marshal.AllocHGlobal(Marshal.SizeOf(desc));
                     if (mem == IntPtr.Zero)
