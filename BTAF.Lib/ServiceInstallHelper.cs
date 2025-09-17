@@ -1,56 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Management;
-using System.Runtime.InteropServices;
 using System.ServiceProcess;
+using BTAF.Lib.NativeWrapper;
 
 namespace BTAF.Lib
 {
     public static class ServiceInstallHelper
     {
-        [DllImport("Advapi32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr OpenSCManager(IntPtr lpMachineName, IntPtr lpDatabaseName, GenericAccessRights dwDesiredAccess);
-
-        [DllImport("Advapi32.dll")]
-        private static extern IntPtr CloseServiceHandle(IntPtr handle);
-
-        [DllImport("Advapi32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr OpenService(IntPtr hSCManager, [MarshalAs(UnmanagedType.LPWStr)] string lpServiceName, GenericAccessRights dwDesiredAccess);
-
-        [DllImport("Advapi32.dll", CharSet = CharSet.Auto)]
-        private static extern IntPtr ChangeServiceConfig2(IntPtr hService, ServiceInfoLevel dwInfoLevel, IntPtr lpInfo);
 
         private const string ServiceName = "BTAF";
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct ServiceDescriptionW
-        {
-            [MarshalAs(UnmanagedType.LPWStr)]
-            public string lpDescription;
-        }
-
-        private enum ServiceInfoLevel : uint
-        {
-            Description = 1,
-            FailureActions = 2,
-            DelayedAutoStartInfo = 3,
-            FailureActionsFlag = 4,
-            ServiceSidInfo = 5,
-            RequiredPrivilegesInfo = 6,
-            PreshutdownInfo = 7,
-            TriggerInfo = 8,
-            PreferredNode = 9,
-            LaunchProtected = 12
-        }
-
-        [Flags]
-        private enum GenericAccessRights : uint
-        {
-            Read = 0x80000000,
-            Write = 0x40000000,
-            Execute = 0x20000000,
-            All = 0x10000000
-        }
 
         public static bool IsInstalled
         {
@@ -58,11 +17,49 @@ namespace BTAF.Lib
             {
                 try
                 {
-                    using (new ServiceController(ServiceName))
+                    using (var s = new ServiceController(ServiceName))
                     {
-                        //NOOP
+                        //Return any property to find out if the service actually exists
+                        return
+                            s.StartType != ServiceStartMode.Boot ||
+                            s.StartType != ServiceStartMode.System;
                     }
-                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static bool IsEnabled
+        {
+            get
+            {
+                try
+                {
+                    using (var s = new ServiceController(ServiceName))
+                    {
+                        return s.StartType != ServiceStartMode.Disabled;
+                    }
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static bool IsRunning
+        {
+            get
+            {
+                try
+                {
+                    using (var s = new ServiceController(ServiceName))
+                    {
+                        return s.Status == ServiceControllerStatus.StartPending || s.Status == ServiceControllerStatus.Running;
+                    }
                 }
                 catch
                 {
@@ -103,6 +100,60 @@ namespace BTAF.Lib
             }
         }
 
+        public static void Enable()
+        {
+            using (var manager = new ServiceControlManager())
+            {
+                using (var service = manager.OpenService(ServiceName))
+                {
+                    service.SetStartupType(ServiceStartMode.Automatic);
+                }
+            }
+        }
+
+        public static void Disable()
+        {
+            using (var manager = new ServiceControlManager())
+            {
+                using (var service = manager.OpenService(ServiceName))
+                {
+                    service.SetStartupType(ServiceStartMode.Disabled);
+                }
+            }
+        }
+
+        public static void Start()
+        {
+            using (var s = new ServiceController(ServiceName))
+            {
+                if (s.Status == ServiceControllerStatus.Running)
+                {
+                    return;
+                }
+                s.Start();
+                if (s.Status == ServiceControllerStatus.StartPending)
+                {
+                    s.WaitForStatus(ServiceControllerStatus.Running);
+                }
+            }
+        }
+
+        public static void Stop()
+        {
+            using (var s = new ServiceController(ServiceName))
+            {
+                if (s.Status == ServiceControllerStatus.Stopped)
+                {
+                    return;
+                }
+                s.Stop();
+                if (s.Status == ServiceControllerStatus.StopPending)
+                {
+                    s.WaitForStatus(ServiceControllerStatus.Stopped);
+                }
+            }
+        }
+
         private static string GetExeFileName()
         {
             using (var p = Process.GetCurrentProcess())
@@ -113,55 +164,13 @@ namespace BTAF.Lib
 
         private static void SetDescription()
         {
-            var manager = OpenSCManager(IntPtr.Zero, IntPtr.Zero, GenericAccessRights.Write | GenericAccessRights.Read | (GenericAccessRights)0xF003F);
-            if (manager == IntPtr.Zero)
+            const string desc = "Takes control of the bluetooth audio gateway service to fix faulty audio implementation in Windows 11 | https://github.com/AyrA/BTAF";
+            using (var manager = new ServiceControlManager())
             {
-                throw new Exception("Failed to open service database");
-            }
-            try
-            {
-                var service = OpenService(manager, ServiceName, GenericAccessRights.Read | GenericAccessRights.Write);
-                if (service == IntPtr.Zero)
+                using (var service = manager.OpenService(ServiceName))
                 {
-                    throw new Exception("Failed to open service");
+                    service.SetDescription(desc);
                 }
-                try
-                {
-                    var desc = new ServiceDescriptionW()
-                    {
-                        lpDescription = "Takes control of the bluetooth audio gateway service to fix faulty audio implementation in Windows 11 | https://github.com/AyrA/BTAF"
-                    };
-                    IntPtr mem = Marshal.AllocHGlobal(Marshal.SizeOf(desc));
-                    if (mem == IntPtr.Zero)
-                    {
-                        throw new Exception("Unable to allocate memory");
-                    }
-                    try
-                    {
-                        Marshal.StructureToPtr(desc, mem, false);
-                        try
-                        {
-                            ChangeServiceConfig2(service, ServiceInfoLevel.Description, mem);
-                        }
-                        finally
-                        {
-                            Marshal.DestroyStructure(mem, typeof(ServiceDescriptionW));
-                            Marshal.FreeHGlobal(mem);
-                        }
-                    }
-                    finally
-                    {
-                        Marshal.FreeHGlobal(mem);
-                    }
-                }
-                finally
-                {
-                    CloseServiceHandle(service);
-                }
-            }
-            finally
-            {
-                CloseServiceHandle(manager);
             }
         }
     }

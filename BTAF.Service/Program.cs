@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System;
 using System.ServiceProcess;
 using BTAF.Lib;
 
@@ -25,29 +25,15 @@ namespace BTAF.Service
                     case "/UNINSTALL":
                         ServiceInstallHelper.Uninstall();
                         break;
-#if DEBUG
-                    case "/TEST":
-                        //AudioDeviceEnumerator.EnumerateDevices();
+                    case "/CONFIG":
+                        Configurator.Run();
                         break;
-#endif
+                    default:
+                        Console.WriteLine("BTAF.Service /INSTALL|/UNINSTALL|/CONFIG");
+                        break;
                 }
+                return;
             }
-#if DEBUG
-            Debug.Print("## Debug session start");
-            foreach (var ad in AudioDeviceEnumerator.EnumerateDevices(true))
-            {
-                Debug.Print("Id={0}; Name={1}", ad.Id, ad.Name);
-            }
-            ServiceControl.Stop();
-            Debug.Print("## Debug session end");
-#else
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
-            {
-                new BTAFService()
-            };
-            ServiceBase.Run(ServicesToRun);
-#endif
         }
 
         private static void RunService()

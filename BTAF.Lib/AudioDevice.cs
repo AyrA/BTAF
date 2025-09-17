@@ -7,7 +7,7 @@ namespace BTAF.Lib
         private static readonly int code = new Random().Next() << 1;
 
         public string Id { get; }
-        public string Name { get; }
+        public string Name { get; set; }
 
         private readonly int hashCode;
 
