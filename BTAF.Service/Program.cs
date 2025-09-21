@@ -30,9 +30,6 @@ namespace BTAF.Service
                     case "/UNINSTALL":
                         ServiceInstallHelper.Uninstall();
                         break;
-                    case "/CONFIG":
-                        Configurator.Run();
-                        break;
                     default:
                         ShowHelp();
                         Console.WriteLine("BTAF.Service /INSTALL|/UNINSTALL|/CONFIG");
@@ -61,7 +58,7 @@ namespace BTAF.Service
 
         private static void ShowHelp()
         {
-            MessageBox.Show("BTAF.Service [/INSTALL|/UNINSTALL|/CONFIG|/SERVICE]", "BTAF Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("BTAF.Service [/INSTALL|/UNINSTALL|/SERVICE]", "BTAF Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
