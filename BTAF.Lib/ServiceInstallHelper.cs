@@ -79,13 +79,14 @@ namespace BTAF.Lib
                 var createArgs = new object[] {
                     ServiceName,
                     "Bluetooth Audio Fix",
-                    $"\"{GetExeFileName()}\"", //Exe name should be in quotes in case the path contains spaces
+                    $"\"{GetExeFileName()}\" /SERVICE", //Exe name should be in quotes in case the path contains spaces
                     16, //"Own Process" service type
                     0, //No special error handling
                     "Automatic", //Start mode
                     false, //No desktop interaction
                     null, //No username = SYSTEM account
                     "", //System account services do not have a password
+                    //There are extra arguments here but we don't need them, and they're optional
                 };
                 m.InvokeMethod("Create", createArgs);
             }
@@ -94,6 +95,15 @@ namespace BTAF.Lib
 
         public static void Uninstall()
         {
+            //Stop service if still running
+            try
+            {
+                Stop();
+            }
+            catch
+            {
+                //NOOP
+            }
             using (var m = new ManagementObject($"Win32_Service.Name=\"{ServiceName}\""))
             {
                 m.InvokeMethod("Delete", new object[0]);
@@ -113,6 +123,15 @@ namespace BTAF.Lib
 
         public static void Disable()
         {
+            //Stop service if still running
+            try
+            {
+                Stop();
+            }
+            catch
+            {
+                //NOOP
+            }
             using (var manager = new ServiceControlManager())
             {
                 using (var service = manager.OpenService(ServiceName))

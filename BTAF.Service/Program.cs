@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceProcess;
+using System.Windows.Forms;
 using BTAF.Lib;
 
 namespace BTAF.Service
@@ -9,16 +10,20 @@ namespace BTAF.Service
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        [STAThread]
         static void Main(string[] args)
         {
             if (args.Length == 0)
             {
-                RunService();
+                RunConfig();
             }
             else
             {
                 switch (args[0].ToUpperInvariant())
                 {
+                    case "/SERVICE":
+                        RunService();
+                        break;
                     case "/INSTALL":
                         ServiceInstallHelper.Install();
                         break;
@@ -29,6 +34,7 @@ namespace BTAF.Service
                         Configurator.Run();
                         break;
                     default:
+                        ShowHelp();
                         Console.WriteLine("BTAF.Service /INSTALL|/UNINSTALL|/CONFIG");
                         break;
                 }
@@ -44,6 +50,18 @@ namespace BTAF.Service
                 new BTAFService()
             };
             ServiceBase.Run(ServicesToRun);
+        }
+
+        private static void RunConfig()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FrmConfig());
+        }
+
+        private static void ShowHelp()
+        {
+            MessageBox.Show("BTAF.Service [/INSTALL|/UNINSTALL|/CONFIG|/SERVICE]", "BTAF Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -23,6 +24,10 @@ namespace BTAF.Lib
 
         public void Save()
         {
+            if (string.IsNullOrEmpty(AudioDeviceId))
+            {
+                throw new InvalidOperationException("Audio device not specified");
+            }
             using (var fs = File.Create(filename))
             {
                 using (var bw = new BinaryWriter(fs))
