@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -11,18 +12,41 @@ namespace BTAF.Service
     public partial class FrmConfig : Form
     {
         private readonly ConfigFile config;
+        private readonly AudioMonitor monitor;
 
         public FrmConfig()
         {
             config = ConfigFile.Load();
+            monitor = new AudioMonitor();
+            monitor.AudioGatewayServiceChange += Monitor_AudioGatewayServiceChange;
             InitializeComponent();
             RefreshAudioDevices();
             SetServiceButtons();
+            SetManualButtons();
+            AddManualEventMessage("Manual audio monitor ready");
             var exe = Path.GetFullPath(Application.ExecutablePath);
             var profileDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             if (exe.StartsWith(profileDir + Path.DirectorySeparatorChar))
             {
                 LblPathWarning.Visible = true;
+            }
+            Font = new Font(Font.FontFamily, Font.Size * 1.5f);
+        }
+
+        private void Monitor_AudioGatewayServiceChange(object sender, bool isRunning)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                AddManualEventMessage(string.Format("Audio gateway service change: {0}", isRunning ? "Running" : "Stopped"));
+            });
+        }
+
+        private void AddManualEventMessage(string message)
+        {
+            LbManualLog.SelectedIndex = LbManualLog.Items.Add(string.Format("[{0}] {1}", DateTime.Now, message));
+            while (LbManualLog.Items.Count > 100)
+            {
+                LbManualLog.Items.RemoveAt(0);
             }
         }
 
@@ -83,6 +107,12 @@ namespace BTAF.Service
                     BtnServiceStop.Enabled =
                     false;
             }
+        }
+
+        private void SetManualButtons()
+        {
+            BtnManualStart.Enabled = !monitor.IsRunning;
+            BtnManualStop.Enabled = monitor.IsRunning;
         }
 
         private void RefreshAudioDevices()
@@ -257,6 +287,20 @@ namespace BTAF.Service
                 MessageBox.Show("The bluetooth audio gateway service was reset and started", "Service reset", MessageBoxButtons.OK, MessageBoxIcon.Information);
             });
 
+        }
+
+        private void BtnManualStart_Click(object sender, EventArgs e)
+        {
+            monitor.Start();
+            SetManualButtons();
+            AddManualEventMessage("Started audio monitor");
+        }
+
+        private void BtnManualStop_Click(object sender, EventArgs e)
+        {
+            monitor.Stop();
+            SetManualButtons();
+            AddManualEventMessage("Stopped audio monitor");
         }
     }
 }

@@ -54,6 +54,11 @@
             this.label6 = new System.Windows.Forms.Label();
             this.BtnServiceReset = new System.Windows.Forms.Button();
             this.LblPathWarning = new System.Windows.Forms.Label();
+            this.TabPageManual = new System.Windows.Forms.TabPage();
+            this.label7 = new System.Windows.Forms.Label();
+            this.BtnManualStart = new System.Windows.Forms.Button();
+            this.BtnManualStop = new System.Windows.Forms.Button();
+            this.LbManualLog = new System.Windows.Forms.ListBox();
             this.TabControlMain.SuspendLayout();
             this.TabPageConfig.SuspendLayout();
             this.TabPageService.SuspendLayout();
@@ -61,6 +66,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.TabPageManual.SuspendLayout();
             this.SuspendLayout();
             // 
             // TabControlMain
@@ -70,6 +76,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TabControlMain.Controls.Add(this.TabPageConfig);
             this.TabControlMain.Controls.Add(this.TabPageService);
+            this.TabControlMain.Controls.Add(this.TabPageManual);
             this.TabControlMain.Location = new System.Drawing.Point(12, 12);
             this.TabControlMain.Name = "TabControlMain";
             this.TabControlMain.SelectedIndex = 0;
@@ -348,6 +355,61 @@
             this.LblPathWarning.Text = resources.GetString("LblPathWarning.Text");
             this.LblPathWarning.Visible = false;
             // 
+            // TabPageManual
+            // 
+            this.TabPageManual.Controls.Add(this.LbManualLog);
+            this.TabPageManual.Controls.Add(this.BtnManualStop);
+            this.TabPageManual.Controls.Add(this.BtnManualStart);
+            this.TabPageManual.Controls.Add(this.label7);
+            this.TabPageManual.Location = new System.Drawing.Point(4, 22);
+            this.TabPageManual.Name = "TabPageManual";
+            this.TabPageManual.Size = new System.Drawing.Size(552, 312);
+            this.TabPageManual.TabIndex = 2;
+            this.TabPageManual.Text = "Manual Operation";
+            this.TabPageManual.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoEllipsis = true;
+            this.label7.Location = new System.Drawing.Point(16, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(524, 60);
+            this.label7.TabIndex = 0;
+            this.label7.Text = resources.GetString("label7.Text");
+            // 
+            // BtnManualStart
+            // 
+            this.BtnManualStart.Location = new System.Drawing.Point(19, 78);
+            this.BtnManualStart.Name = "BtnManualStart";
+            this.BtnManualStart.Size = new System.Drawing.Size(75, 23);
+            this.BtnManualStart.TabIndex = 1;
+            this.BtnManualStart.Text = "Start";
+            this.BtnManualStart.UseVisualStyleBackColor = true;
+            this.BtnManualStart.Click += new System.EventHandler(this.BtnManualStart_Click);
+            // 
+            // BtnManualStop
+            // 
+            this.BtnManualStop.Location = new System.Drawing.Point(100, 78);
+            this.BtnManualStop.Name = "BtnManualStop";
+            this.BtnManualStop.Size = new System.Drawing.Size(75, 23);
+            this.BtnManualStop.TabIndex = 1;
+            this.BtnManualStop.Text = "Stop";
+            this.BtnManualStop.UseVisualStyleBackColor = true;
+            this.BtnManualStop.Click += new System.EventHandler(this.BtnManualStop_Click);
+            // 
+            // LbManualLog
+            // 
+            this.LbManualLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LbManualLog.FormattingEnabled = true;
+            this.LbManualLog.Location = new System.Drawing.Point(19, 107);
+            this.LbManualLog.Name = "LbManualLog";
+            this.LbManualLog.Size = new System.Drawing.Size(521, 199);
+            this.LbManualLog.TabIndex = 2;
+            // 
             // FrmConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -356,6 +418,7 @@
             this.ClientSize = new System.Drawing.Size(584, 391);
             this.Controls.Add(this.BtnClose);
             this.Controls.Add(this.TabControlMain);
+            this.MinimumSize = new System.Drawing.Size(600, 430);
             this.Name = "FrmConfig";
             this.Text = "BTAF Service Configuration";
             this.TabControlMain.ResumeLayout(false);
@@ -370,6 +433,7 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.TabPageManual.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -401,5 +465,10 @@
         private System.Windows.Forms.Button BtnServiceDisable;
         private System.Windows.Forms.Button BtnServiceEnable;
         private System.Windows.Forms.Label LblPathWarning;
+        private System.Windows.Forms.TabPage TabPageManual;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button BtnManualStop;
+        private System.Windows.Forms.Button BtnManualStart;
+        private System.Windows.Forms.ListBox LbManualLog;
     }
 }

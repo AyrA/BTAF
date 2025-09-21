@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioComboBoxItem.cs" />
+    <Compile Include="AudioMonitor.cs" />
     <Compile Include="BTAFService.cs">
       <SubType>Component</SubType>
     </Compile>

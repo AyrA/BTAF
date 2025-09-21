@@ -120,4 +120,7 @@
   <data name="LblPathWarning.Text" xml:space="preserve">
     <value>The application is currently running from within your user profile folder. For Windows services, this is usually not a good idea. Unless you know what you do, use the provided installer to install it to a more permanent location or you may risk service start issues</value>
   </data>
+  <data name="label7.Text" xml:space="preserve">
+    <value>Manual operation allows this application to work without installing a service. However, you must keep this application running for continued functionality. Using manual mode and the service at the same time may cause unwanted side effects</value>
+  </data>
 </root>

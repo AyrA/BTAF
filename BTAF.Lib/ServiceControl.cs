@@ -8,8 +8,8 @@ namespace BTAF.Lib
     {
         private enum StartMode
         {
-            Disabled,
-            Manual
+            Disabled = ServiceStartMode.Disabled,
+            Manual = ServiceStartMode.Manual
         }
 
         private const string ServiceName = "BTAGService";
@@ -109,6 +109,13 @@ namespace BTAF.Lib
 
         private static void SetMode(StartMode mode)
         {
+            using (var s = GetService())
+            {
+                if (s.StartType == (ServiceStartMode)mode)
+                {
+                    return;
+                }
+            }
             using (var m = new ManagementObject($"Win32_Service.Name=\"{ServiceName}\""))
             {
                 m.InvokeMethod("ChangeStartMode", new object[] { mode.ToString() });
