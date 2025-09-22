@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BTAF.Lib.Interop;
 
 namespace BTAF.Lib
@@ -16,15 +17,22 @@ namespace BTAF.Lib
 
         public static IEnumerable<AudioDevice> EnumerateDevices(bool activeOnly)
         {
+            return EnumerateDevicesInternal(activeOnly).Select(item =>
+            {
+                var store = item.OpenPropertyStore(2); //2=Read
+                var name = store.GetValue(nameKey);
+                return new AudioDevice(item.GetId(), name.Value.ToString());
+            });
+        }
+
+        internal static IEnumerable<IMMDevice> EnumerateDevicesInternal(bool activeOnly)
+        {
             var instance = CreateInstance();
             var enumerator = instance.EnumAudioEndpoints(EDataFlow.Render, activeOnly ? EDeviceState.Active : EDeviceState.All);
 
             for (var i = 0; i < enumerator.GetCount(); i++)
             {
-                var item = enumerator.Item(i);
-                var store = item.OpenPropertyStore(2); //2=Read
-                var name = store.GetValue(nameKey);
-                yield return new AudioDevice(item.GetId(), name.Value.ToString());
+                yield return enumerator.Item(i);
             }
         }
 

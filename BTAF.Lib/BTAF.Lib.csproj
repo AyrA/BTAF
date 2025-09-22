@@ -46,14 +46,18 @@
   <ItemGroup>
     <Compile Include="AudioDevice.cs" />
     <Compile Include="AudioDeviceEnumerator.cs" />
-    <Compile Include="AudioDevices.cs" />
+    <Compile Include="AudioRenderer.cs" />
     <Compile Include="ConfigFile.cs" />
+    <Compile Include="Interop\AudioClientShareMode.cs" />
+    <Compile Include="Interop\AudioClientStreamFlags.cs" />
     <Compile Include="Interop\Blob.cs" />
     <Compile Include="Interop\ClsCtx.cs" />
     <Compile Include="Interop\EDataFlow.cs" />
     <Compile Include="Interop\EDeviceState.cs" />
     <Compile Include="Interop\ERole.cs" />
     <Compile Include="Interop\Guids.cs" />
+    <Compile Include="Interop\IAudioClient.cs" />
+    <Compile Include="Interop\IAudioRenderClient.cs" />
     <Compile Include="Interop\IMMDevice.cs" />
     <Compile Include="Interop\IMMDeviceCollection.cs" />
     <Compile Include="Interop\IMMDeviceEnumerator.cs" />
@@ -62,6 +66,7 @@
     <Compile Include="Interop\NativeMethods.cs" />
     <Compile Include="Interop\PropertyKey.cs" />
     <Compile Include="Interop\PropVariant.cs" />
+    <Compile Include="Interop\WaveFormatEx.cs" />
     <Compile Include="NativeWrapper\GenericAccessRights.cs" />
     <Compile Include="NativeWrapper\Service.cs" />
     <Compile Include="NativeWrapper\ServiceControlManager.cs" />
