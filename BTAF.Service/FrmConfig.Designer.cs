@@ -419,9 +419,9 @@
             this.CbKeepAudioBusy.AutoSize = true;
             this.CbKeepAudioBusy.Location = new System.Drawing.Point(9, 67);
             this.CbKeepAudioBusy.Name = "CbKeepAudioBusy";
-            this.CbKeepAudioBusy.Size = new System.Drawing.Size(140, 17);
+            this.CbKeepAudioBusy.Size = new System.Drawing.Size(146, 17);
             this.CbKeepAudioBusy.TabIndex = 5;
-            this.CbKeepAudioBusy.Text = "Keep audio device busy";
+            this.CbKeepAudioBusy.Text = "Fix bad audio stream start";
             this.CbKeepAudioBusy.UseVisualStyleBackColor = true;
             // 
             // label8
@@ -433,8 +433,8 @@
             this.label8.Size = new System.Drawing.Size(529, 26);
             this.label8.TabIndex = 3;
             this.label8.Text = "Enable this option if the beginning of audio is cut off, or plays 1-2 millisecond" +
-    "s of garbage when playback starts.\r\nThere are no negative side effects if this o" +
-    "ption is enabled but not needed";
+    "s of garbage when playback starts.\r\nThere are usually no negative side effects i" +
+    "f this option is enabled but not needed";
             // 
             // FrmConfig
             // 
