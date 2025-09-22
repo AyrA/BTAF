@@ -430,10 +430,11 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(6, 87);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(442, 13);
+            this.label8.Size = new System.Drawing.Size(529, 26);
             this.label8.TabIndex = 3;
             this.label8.Text = "Enable this option if the beginning of audio is cut off, or plays 1-2 millisecond" +
-    "s of garbage first";
+    "s of garbage when playback starts.\r\nThere are no negative side effects if this o" +
+    "ption is enabled but not needed";
             // 
             // FrmConfig
             // 
@@ -443,6 +444,7 @@
             this.ClientSize = new System.Drawing.Size(584, 391);
             this.Controls.Add(this.BtnClose);
             this.Controls.Add(this.TabControlMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(600, 430);
             this.Name = "FrmConfig";
             this.Text = "BTAF Service Configuration";
