@@ -15,6 +15,19 @@ namespace BTAF.Lib
             PropertyId = 6
         };
 
+        public static AudioDevice GetDefaultDevice()
+        {
+            var instance = CreateInstance();
+            var dev = instance.GetDefaultAudioEndpoint(EDataFlow.Render, ERole.Multimedia);
+            if (dev == null)
+            {
+                return null;
+            }
+            var store = dev.OpenPropertyStore(2); //2=Read
+            var name = store.GetValue(nameKey);
+            return new AudioDevice(dev.GetId(), name.Value.ToString());
+        }
+
         public static IEnumerable<AudioDevice> EnumerateDevices(bool activeOnly)
         {
             return EnumerateDevicesInternal(activeOnly).Select(item =>

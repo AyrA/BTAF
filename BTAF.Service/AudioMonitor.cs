@@ -12,15 +12,21 @@ namespace BTAF.Service
         public event AudioGatewayServiceChangeEventHandler AudioGatewayServiceChange = delegate { };
 
         private readonly Timer t;
-        private readonly string deviceId;
+        private ConfigFile config;
+        private AudioRenderer renderer = null;
 
         public bool IsRunning { get; private set; }
 
         public AudioMonitor()
         {
             t = new Timer(TimerAction);
-            deviceId = ConfigFile.Load().AudioDeviceId;
+            config = ConfigFile.Load();
             IsRunning = false;
+        }
+
+        public void ReloadConfig()
+        {
+            config = ConfigFile.Load();
         }
 
         public void Start()
@@ -44,24 +50,37 @@ namespace BTAF.Service
         private void TimerAction(object state)
         {
             bool triggerEvent = false;
-            if (string.IsNullOrEmpty(deviceId))
+            if (string.IsNullOrEmpty(config.AudioDeviceId))
             {
                 return;
             }
             try
             {
-                var dev = AudioDeviceEnumerator.EnumerateDevices(true).FirstOrDefault(m => m.Id == deviceId);
+                var dev = AudioDeviceEnumerator.EnumerateDevices(true).FirstOrDefault(m => m.Id == config.AudioDeviceId);
                 if (dev != null)
                 {
                     triggerEvent = ServiceControl.IsRunning;
                     ServiceControl.Stop();
                     ServiceControl.Disable();
+                    if (config.KeepDeviceBusy && renderer == null)
+                    {
+                        renderer = new AudioRenderer(config.AudioDeviceId);
+                        renderer.Start();
+                    }
                 }
                 else
                 {
                     triggerEvent = !ServiceControl.IsRunning;
                     ServiceControl.Enable();
                     ServiceControl.Start();
+                    if (renderer != null)
+                    {
+                        using (renderer)
+                        {
+                            renderer.Stop();
+                        }
+                        renderer = null;
+                    }
                 }
             }
             catch

@@ -17,6 +17,14 @@ namespace BTAF.Service
         public FrmConfig()
         {
             config = ConfigFile.Load();
+            if (string.IsNullOrEmpty(config.AudioDeviceId))
+            {
+                var defaultDevice = AudioDeviceEnumerator.GetDefaultDevice();
+                if (defaultDevice != null)
+                {
+                    config.AudioDeviceId = defaultDevice.Id;
+                }
+            }
             monitor = new AudioMonitor();
             monitor.AudioGatewayServiceChange += Monitor_AudioGatewayServiceChange;
             InitializeComponent();
@@ -24,6 +32,8 @@ namespace BTAF.Service
             SetServiceButtons();
             SetManualButtons();
             AddManualEventMessage("Manual audio monitor ready");
+            CbKeepAudioBusy.Checked = config.KeepDeviceBusy;
+
             var exe = Path.GetFullPath(Application.ExecutablePath);
             var profileDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             if (exe.StartsWith(profileDir + Path.DirectorySeparatorChar))
@@ -143,9 +153,20 @@ namespace BTAF.Service
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
+            if (CBAudioDeviceList.SelectedIndex < 0)
+            {
+                MessageBox.Show("Please select an audio device", "No device", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             try
             {
+                config.AudioDeviceId = ((AudioComboBoxItem)CBAudioDeviceList.SelectedItem).Device.Id;
+                config.KeepDeviceBusy = CbKeepAudioBusy.Checked;
                 config.Save();
+                monitor.ReloadConfig();
+                if (monitor.IsRunning)
+                {
+                    AddManualEventMessage("Applied new monitor configuration");
+                }
                 if (ServiceInstallHelper.IsRunning)
                 {
                     MessageBox.Show("The service is currently running. Restart it from the service control tab for the changes to take effect.",
@@ -291,6 +312,7 @@ namespace BTAF.Service
 
         private void BtnManualStart_Click(object sender, EventArgs e)
         {
+            monitor.ReloadConfig();
             monitor.Start();
             SetManualButtons();
             AddManualEventMessage("Started audio monitor");

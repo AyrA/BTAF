@@ -31,41 +31,43 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmConfig));
             this.TabControlMain = new System.Windows.Forms.TabControl();
             this.TabPageConfig = new System.Windows.Forms.TabPage();
+            this.LblPathWarning = new System.Windows.Forms.Label();
             this.BtnSave = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.BtnRefresh = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.CBAudioDeviceList = new System.Windows.Forms.ComboBox();
             this.TabPageService = new System.Windows.Forms.TabPage();
-            this.BtnClose = new System.Windows.Forms.Button();
-            this.BtnServiceInstall = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.BtnServiceUninstall = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.BtnServiceDisable = new System.Windows.Forms.Button();
-            this.BtnServiceEnable = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.BtnServiceReset = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.BtnServiceStop = new System.Windows.Forms.Button();
             this.BtnServiceStart = new System.Windows.Forms.Button();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.BtnServiceReset = new System.Windows.Forms.Button();
-            this.LblPathWarning = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.BtnServiceDisable = new System.Windows.Forms.Button();
+            this.BtnServiceEnable = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.BtnServiceUninstall = new System.Windows.Forms.Button();
+            this.BtnServiceInstall = new System.Windows.Forms.Button();
             this.TabPageManual = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
-            this.BtnManualStart = new System.Windows.Forms.Button();
-            this.BtnManualStop = new System.Windows.Forms.Button();
             this.LbManualLog = new System.Windows.Forms.ListBox();
+            this.BtnManualStop = new System.Windows.Forms.Button();
+            this.BtnManualStart = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.BtnClose = new System.Windows.Forms.Button();
+            this.CbKeepAudioBusy = new System.Windows.Forms.CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.TabControlMain.SuspendLayout();
             this.TabPageConfig.SuspendLayout();
             this.TabPageService.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.TabPageManual.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,8 +87,10 @@
             // 
             // TabPageConfig
             // 
+            this.TabPageConfig.Controls.Add(this.CbKeepAudioBusy);
             this.TabPageConfig.Controls.Add(this.LblPathWarning);
             this.TabPageConfig.Controls.Add(this.BtnSave);
+            this.TabPageConfig.Controls.Add(this.label8);
             this.TabPageConfig.Controls.Add(this.label2);
             this.TabPageConfig.Controls.Add(this.BtnRefresh);
             this.TabPageConfig.Controls.Add(this.label1);
@@ -98,6 +102,20 @@
             this.TabPageConfig.TabIndex = 0;
             this.TabPageConfig.Text = "Configuration";
             this.TabPageConfig.UseVisualStyleBackColor = true;
+            // 
+            // LblPathWarning
+            // 
+            this.LblPathWarning.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.LblPathWarning.AutoEllipsis = true;
+            this.LblPathWarning.ForeColor = System.Drawing.Color.Red;
+            this.LblPathWarning.Location = new System.Drawing.Point(6, 122);
+            this.LblPathWarning.Name = "LblPathWarning";
+            this.LblPathWarning.Size = new System.Drawing.Size(540, 158);
+            this.LblPathWarning.TabIndex = 4;
+            this.LblPathWarning.Text = resources.GetString("LblPathWarning.Text");
+            this.LblPathWarning.Visible = false;
             // 
             // BtnSave
             // 
@@ -165,61 +183,81 @@
             this.TabPageService.Text = "Service Control";
             this.TabPageService.UseVisualStyleBackColor = true;
             // 
-            // BtnClose
+            // groupBox4
             // 
-            this.BtnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BtnClose.Location = new System.Drawing.Point(493, 356);
-            this.BtnClose.Name = "BtnClose";
-            this.BtnClose.Size = new System.Drawing.Size(75, 23);
-            this.BtnClose.TabIndex = 1;
-            this.BtnClose.Text = "&Close";
-            this.BtnClose.UseVisualStyleBackColor = true;
-            this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);
-            // 
-            // BtnServiceInstall
-            // 
-            this.BtnServiceInstall.Location = new System.Drawing.Point(6, 19);
-            this.BtnServiceInstall.Name = "BtnServiceInstall";
-            this.BtnServiceInstall.Size = new System.Drawing.Size(75, 23);
-            this.BtnServiceInstall.TabIndex = 2;
-            this.BtnServiceInstall.Text = "Install";
-            this.BtnServiceInstall.UseVisualStyleBackColor = true;
-            this.BtnServiceInstall.Click += new System.EventHandler(this.BtnServiceInstall_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.BtnServiceUninstall);
-            this.groupBox1.Controls.Add(this.BtnServiceInstall);
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(540, 70);
-            this.groupBox1.TabIndex = 3;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Service installation";
+            this.groupBox4.Controls.Add(this.label6);
+            this.groupBox4.Controls.Add(this.BtnServiceReset);
+            this.groupBox4.Location = new System.Drawing.Point(6, 234);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(540, 70);
+            this.groupBox4.TabIndex = 3;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Bluetooth Audio Gateway Service";
             // 
-            // BtnServiceUninstall
+            // label6
             // 
-            this.BtnServiceUninstall.Location = new System.Drawing.Point(87, 19);
-            this.BtnServiceUninstall.Name = "BtnServiceUninstall";
-            this.BtnServiceUninstall.Size = new System.Drawing.Size(75, 23);
-            this.BtnServiceUninstall.TabIndex = 2;
-            this.BtnServiceUninstall.Text = "Uninstall";
-            this.BtnServiceUninstall.UseVisualStyleBackColor = true;
-            this.BtnServiceUninstall.Click += new System.EventHandler(this.BtnServiceUninstall_Click);
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 45);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(467, 13);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "This restores the broken Windows 11 behavior until you start the audio fix servic" +
+    "e for the next time";
             // 
-            // label3
+            // BtnServiceReset
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 45);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(392, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "You must uninstall the service before moving this application to a different loca" +
-    "tion";
+            this.BtnServiceReset.Location = new System.Drawing.Point(6, 19);
+            this.BtnServiceReset.Name = "BtnServiceReset";
+            this.BtnServiceReset.Size = new System.Drawing.Size(75, 23);
+            this.BtnServiceReset.TabIndex = 2;
+            this.BtnServiceReset.Text = "Reset";
+            this.BtnServiceReset.UseVisualStyleBackColor = true;
+            this.BtnServiceReset.Click += new System.EventHandler(this.BtnServiceReset_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.BtnServiceStop);
+            this.groupBox3.Controls.Add(this.BtnServiceStart);
+            this.groupBox3.Location = new System.Drawing.Point(6, 158);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(540, 70);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Service start/stop";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 45);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(341, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Unless the service is disabled, it will start again on the next system boot";
+            // 
+            // BtnServiceStop
+            // 
+            this.BtnServiceStop.Location = new System.Drawing.Point(87, 19);
+            this.BtnServiceStop.Name = "BtnServiceStop";
+            this.BtnServiceStop.Size = new System.Drawing.Size(75, 23);
+            this.BtnServiceStop.TabIndex = 2;
+            this.BtnServiceStop.Text = "Stop";
+            this.BtnServiceStop.UseVisualStyleBackColor = true;
+            this.BtnServiceStop.Click += new System.EventHandler(this.BtnServiceStop_Click);
+            // 
+            // BtnServiceStart
+            // 
+            this.BtnServiceStart.Location = new System.Drawing.Point(6, 19);
+            this.BtnServiceStart.Name = "BtnServiceStart";
+            this.BtnServiceStart.Size = new System.Drawing.Size(75, 23);
+            this.BtnServiceStart.TabIndex = 2;
+            this.BtnServiceStart.Text = "Start";
+            this.BtnServiceStart.UseVisualStyleBackColor = true;
+            this.BtnServiceStart.Click += new System.EventHandler(this.BtnServiceStart_Click);
             // 
             // groupBox2
             // 
@@ -265,95 +303,49 @@
             this.BtnServiceEnable.UseVisualStyleBackColor = true;
             this.BtnServiceEnable.Click += new System.EventHandler(this.BtnServiceEnable_Click);
             // 
-            // groupBox3
+            // groupBox1
             // 
-            this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.BtnServiceStop);
-            this.groupBox3.Controls.Add(this.BtnServiceStart);
-            this.groupBox3.Location = new System.Drawing.Point(6, 158);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(540, 70);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Service start/stop";
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.BtnServiceUninstall);
+            this.groupBox1.Controls.Add(this.BtnServiceInstall);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(540, 70);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Service installation";
             // 
-            // label5
+            // label3
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 45);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(341, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Unless the service is disabled, it will start again on the next system boot";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 45);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(392, 13);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "You must uninstall the service before moving this application to a different loca" +
+    "tion";
             // 
-            // BtnServiceStop
+            // BtnServiceUninstall
             // 
-            this.BtnServiceStop.Location = new System.Drawing.Point(87, 19);
-            this.BtnServiceStop.Name = "BtnServiceStop";
-            this.BtnServiceStop.Size = new System.Drawing.Size(75, 23);
-            this.BtnServiceStop.TabIndex = 2;
-            this.BtnServiceStop.Text = "Stop";
-            this.BtnServiceStop.UseVisualStyleBackColor = true;
-            this.BtnServiceStop.Click += new System.EventHandler(this.BtnServiceStop_Click);
+            this.BtnServiceUninstall.Location = new System.Drawing.Point(87, 19);
+            this.BtnServiceUninstall.Name = "BtnServiceUninstall";
+            this.BtnServiceUninstall.Size = new System.Drawing.Size(75, 23);
+            this.BtnServiceUninstall.TabIndex = 2;
+            this.BtnServiceUninstall.Text = "Uninstall";
+            this.BtnServiceUninstall.UseVisualStyleBackColor = true;
+            this.BtnServiceUninstall.Click += new System.EventHandler(this.BtnServiceUninstall_Click);
             // 
-            // BtnServiceStart
+            // BtnServiceInstall
             // 
-            this.BtnServiceStart.Location = new System.Drawing.Point(6, 19);
-            this.BtnServiceStart.Name = "BtnServiceStart";
-            this.BtnServiceStart.Size = new System.Drawing.Size(75, 23);
-            this.BtnServiceStart.TabIndex = 2;
-            this.BtnServiceStart.Text = "Start";
-            this.BtnServiceStart.UseVisualStyleBackColor = true;
-            this.BtnServiceStart.Click += new System.EventHandler(this.BtnServiceStart_Click);
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.label6);
-            this.groupBox4.Controls.Add(this.BtnServiceReset);
-            this.groupBox4.Location = new System.Drawing.Point(6, 234);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(540, 70);
-            this.groupBox4.TabIndex = 3;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Bluetooth Audio Gateway Service";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 45);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(467, 13);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "This restores the broken Windows 11 behavior until you start the audio fix servic" +
-    "e for the next time";
-            // 
-            // BtnServiceReset
-            // 
-            this.BtnServiceReset.Location = new System.Drawing.Point(6, 19);
-            this.BtnServiceReset.Name = "BtnServiceReset";
-            this.BtnServiceReset.Size = new System.Drawing.Size(75, 23);
-            this.BtnServiceReset.TabIndex = 2;
-            this.BtnServiceReset.Text = "Reset";
-            this.BtnServiceReset.UseVisualStyleBackColor = true;
-            this.BtnServiceReset.Click += new System.EventHandler(this.BtnServiceReset_Click);
-            // 
-            // LblPathWarning
-            // 
-            this.LblPathWarning.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.LblPathWarning.AutoEllipsis = true;
-            this.LblPathWarning.ForeColor = System.Drawing.Color.Red;
-            this.LblPathWarning.Location = new System.Drawing.Point(6, 73);
-            this.LblPathWarning.Name = "LblPathWarning";
-            this.LblPathWarning.Size = new System.Drawing.Size(540, 207);
-            this.LblPathWarning.TabIndex = 4;
-            this.LblPathWarning.Text = resources.GetString("LblPathWarning.Text");
-            this.LblPathWarning.Visible = false;
+            this.BtnServiceInstall.Location = new System.Drawing.Point(6, 19);
+            this.BtnServiceInstall.Name = "BtnServiceInstall";
+            this.BtnServiceInstall.Size = new System.Drawing.Size(75, 23);
+            this.BtnServiceInstall.TabIndex = 2;
+            this.BtnServiceInstall.Text = "Install";
+            this.BtnServiceInstall.UseVisualStyleBackColor = true;
+            this.BtnServiceInstall.Click += new System.EventHandler(this.BtnServiceInstall_Click);
             // 
             // TabPageManual
             // 
@@ -368,26 +360,16 @@
             this.TabPageManual.Text = "Manual Operation";
             this.TabPageManual.UseVisualStyleBackColor = true;
             // 
-            // label7
+            // LbManualLog
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.LbManualLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoEllipsis = true;
-            this.label7.Location = new System.Drawing.Point(16, 15);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(524, 60);
-            this.label7.TabIndex = 0;
-            this.label7.Text = resources.GetString("label7.Text");
-            // 
-            // BtnManualStart
-            // 
-            this.BtnManualStart.Location = new System.Drawing.Point(19, 78);
-            this.BtnManualStart.Name = "BtnManualStart";
-            this.BtnManualStart.Size = new System.Drawing.Size(75, 23);
-            this.BtnManualStart.TabIndex = 1;
-            this.BtnManualStart.Text = "Start";
-            this.BtnManualStart.UseVisualStyleBackColor = true;
-            this.BtnManualStart.Click += new System.EventHandler(this.BtnManualStart_Click);
+            this.LbManualLog.FormattingEnabled = true;
+            this.LbManualLog.Location = new System.Drawing.Point(19, 107);
+            this.LbManualLog.Name = "LbManualLog";
+            this.LbManualLog.Size = new System.Drawing.Size(521, 199);
+            this.LbManualLog.TabIndex = 2;
             // 
             // BtnManualStop
             // 
@@ -399,16 +381,59 @@
             this.BtnManualStop.UseVisualStyleBackColor = true;
             this.BtnManualStop.Click += new System.EventHandler(this.BtnManualStop_Click);
             // 
-            // LbManualLog
+            // BtnManualStart
             // 
-            this.LbManualLog.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.BtnManualStart.Location = new System.Drawing.Point(19, 78);
+            this.BtnManualStart.Name = "BtnManualStart";
+            this.BtnManualStart.Size = new System.Drawing.Size(75, 23);
+            this.BtnManualStart.TabIndex = 1;
+            this.BtnManualStart.Text = "Start";
+            this.BtnManualStart.UseVisualStyleBackColor = true;
+            this.BtnManualStart.Click += new System.EventHandler(this.BtnManualStart_Click);
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.LbManualLog.FormattingEnabled = true;
-            this.LbManualLog.Location = new System.Drawing.Point(19, 107);
-            this.LbManualLog.Name = "LbManualLog";
-            this.LbManualLog.Size = new System.Drawing.Size(521, 199);
-            this.LbManualLog.TabIndex = 2;
+            this.label7.AutoEllipsis = true;
+            this.label7.Location = new System.Drawing.Point(16, 15);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(524, 60);
+            this.label7.TabIndex = 0;
+            this.label7.Text = resources.GetString("label7.Text");
+            // 
+            // BtnClose
+            // 
+            this.BtnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.BtnClose.Location = new System.Drawing.Point(493, 356);
+            this.BtnClose.Name = "BtnClose";
+            this.BtnClose.Size = new System.Drawing.Size(75, 23);
+            this.BtnClose.TabIndex = 1;
+            this.BtnClose.Text = "&Close";
+            this.BtnClose.UseVisualStyleBackColor = true;
+            this.BtnClose.Click += new System.EventHandler(this.BtnClose_Click);
+            // 
+            // CbKeepAudioBusy
+            // 
+            this.CbKeepAudioBusy.AutoSize = true;
+            this.CbKeepAudioBusy.Location = new System.Drawing.Point(9, 67);
+            this.CbKeepAudioBusy.Name = "CbKeepAudioBusy";
+            this.CbKeepAudioBusy.Size = new System.Drawing.Size(140, 17);
+            this.CbKeepAudioBusy.TabIndex = 5;
+            this.CbKeepAudioBusy.Text = "Keep audio device busy";
+            this.CbKeepAudioBusy.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            this.label8.AutoEllipsis = true;
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 87);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(442, 13);
+            this.label8.TabIndex = 3;
+            this.label8.Text = "Enable this option if the beginning of audio is cut off, or plays 1-2 millisecond" +
+    "s of garbage first";
             // 
             // FrmConfig
             // 
@@ -425,14 +450,14 @@
             this.TabPageConfig.ResumeLayout(false);
             this.TabPageConfig.PerformLayout();
             this.TabPageService.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.TabPageManual.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -470,5 +495,7 @@
         private System.Windows.Forms.Button BtnManualStop;
         private System.Windows.Forms.Button BtnManualStart;
         private System.Windows.Forms.ListBox LbManualLog;
+        private System.Windows.Forms.CheckBox CbKeepAudioBusy;
+        private System.Windows.Forms.Label label8;
     }
 }

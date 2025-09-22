@@ -7,12 +7,24 @@ namespace BTAF.Lib
 {
     public class ConfigFile
     {
-        private const byte Version = 1;
+        private const byte CurrentVersion = 1;
         private const string Magic = "BTAF";
 
         private static readonly string filename;
 
+        /// <summary>
+        /// The id of the device being monitored
+        /// </summary>
         public string AudioDeviceId { get; set; }
+
+        /// <summary>
+        /// True to keep the device busy at all times
+        /// </summary>
+        /// <remarks>
+        /// This might be necessary when the beginning of sound is cut off,
+        /// or a few milliseconds of garbage (from the previous audio session) plays
+        /// </remarks>
+        public bool KeepDeviceBusy { get; set; }
 
         static ConfigFile()
         {
@@ -33,8 +45,9 @@ namespace BTAF.Lib
                 using (var bw = new BinaryWriter(fs))
                 {
                     bw.Write(Encoding.UTF8.GetBytes(Magic));
-                    bw.Write(Version);
+                    bw.Write(CurrentVersion);
                     bw.Write(AudioDeviceId);
+                    bw.Write(KeepDeviceBusy);
                 }
             }
         }
@@ -52,11 +65,13 @@ namespace BTAF.Lib
                         {
                             throw new InvalidDataException("Invalid config file");
                         }
-                        if (br.ReadByte() != Version)
+                        var version = br.ReadByte();
+                        if (version == 0 || version > CurrentVersion)
                         {
-                            throw new InvalidDataException("Invalid config file");
+                            throw new InvalidDataException("Invalid config file. Version not supported");
                         }
                         c.AudioDeviceId = br.ReadString();
+                        c.KeepDeviceBusy = br.ReadBoolean();
                     }
                 }
             }
