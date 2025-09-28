@@ -43,6 +43,11 @@ namespace BTAF.Lib
             }
         }
 
+        private ConfigFile()
+        {
+            MonitorMode = MonitorMode.RequireAny;
+        }
+
         public void Save()
         {
             if (AudioDevices == null || AudioDevices.Length == 0)
@@ -64,6 +69,7 @@ namespace BTAF.Lib
                     {
                         dev.SaveToConfig(bw);
                     }
+                    bw.Write((byte)MonitorMode);
                     bw.Write(KeepDeviceBusy);
                 }
             }
@@ -99,6 +105,7 @@ namespace BTAF.Lib
                             dev.LoadFromConfig(br);
                             c.AudioDevices[i] = dev;
                         }
+                        c.MonitorMode = (MonitorMode)br.ReadByte();
                         c.KeepDeviceBusy = br.ReadBoolean();
                     }
                 }

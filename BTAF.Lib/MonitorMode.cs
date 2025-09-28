@@ -3,7 +3,7 @@
     /// <summary>
     /// Audio device monitoring mode
     /// </summary>
-    public enum MonitorMode
+    public enum MonitorMode : byte
     {
         /// <summary>
         /// Consider the audio device connected when any of the configured devices is connected
