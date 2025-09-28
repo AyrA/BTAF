@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EECCE464-23F1-42BA-85B7-E0BA8B15C774}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>BTAF.Service</RootNamespace>
     <AssemblyName>BTAF.Service</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -61,6 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AudioComboBoxItem.cs" />
+    <Compile Include="FrmAudioDeviceSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmAudioDeviceSelect.Designer.cs">
+      <DependentUpon>FrmAudioDeviceSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="AudioMonitor.cs" />
     <Compile Include="BTAFService.cs">
       <SubType>Component</SubType>
@@ -88,6 +94,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FrmAudioDeviceSelect.resx">
+      <DependentUpon>FrmAudioDeviceSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmConfig.resx">
       <DependentUpon>FrmConfig.cs</DependentUpon>
     </EmbeddedResource>

@@ -67,6 +67,7 @@
     <Compile Include="Interop\PropertyKey.cs" />
     <Compile Include="Interop\PropVariant.cs" />
     <Compile Include="Interop\WaveFormatEx.cs" />
+    <Compile Include="MonitorMode.cs" />
     <Compile Include="NativeWrapper\GenericAccessRights.cs" />
     <Compile Include="NativeWrapper\Service.cs" />
     <Compile Include="NativeWrapper\ServiceControlManager.cs" />

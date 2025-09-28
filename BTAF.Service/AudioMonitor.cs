@@ -13,7 +13,7 @@ namespace BTAF.Service
 
         private readonly Timer t;
         private ConfigFile config;
-        private AudioRenderer renderer = null;
+        private AudioRenderer[] renderer = null;
 
         public bool IsRunning { get; private set; }
 
@@ -50,22 +50,24 @@ namespace BTAF.Service
         private void TimerAction(object state)
         {
             bool triggerEvent = false;
-            if (string.IsNullOrEmpty(config.AudioDeviceId))
+            if (config.AudioDevices == null || config.AudioDevices.Length == 0)
             {
                 return;
             }
             try
             {
-                var dev = AudioDeviceEnumerator.EnumerateDevices(true).FirstOrDefault(m => m.Id == config.AudioDeviceId);
-                if (dev != null)
+                if (config.AudioDeviceReady())
                 {
                     triggerEvent = ServiceControl.IsRunning;
                     ServiceControl.Stop();
                     ServiceControl.Disable();
                     if (config.KeepDeviceBusy && renderer == null)
                     {
-                        renderer = new AudioRenderer(config.AudioDeviceId);
-                        renderer.Start();
+                        renderer = config.GetReadyAudioDevices().Select(m => new AudioRenderer(m.Id)).ToArray();
+                        foreach (var r in renderer)
+                        {
+                            r.Start();
+                        }
                     }
                 }
                 else
@@ -75,9 +77,12 @@ namespace BTAF.Service
                     ServiceControl.Start();
                     if (renderer != null)
                     {
-                        using (renderer)
+                        foreach (var r in renderer)
                         {
-                            renderer.Stop();
+                            using (r)
+                            {
+                                r.Stop();
+                            }
                         }
                         renderer = null;
                     }
