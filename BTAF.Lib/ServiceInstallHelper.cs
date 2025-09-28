@@ -104,9 +104,19 @@ namespace BTAF.Lib
             {
                 //NOOP
             }
-            using (var m = new ManagementObject($"Win32_Service.Name=\"{ServiceName}\""))
+            try
             {
-                m.InvokeMethod("Delete", new object[0]);
+                using (var m = new ManagementObject($"Win32_Service.Name=\"{ServiceName}\""))
+                {
+                    m.InvokeMethod("Delete", new object[0]);
+                }
+            }
+            catch //Swallow the error if the service is not installed
+            {
+                if (IsInstalled)
+                {
+                    throw;
+                }
             }
         }
 

@@ -19,21 +19,32 @@ namespace BTAF.Service
             }
             else
             {
-                switch (args[0].ToUpperInvariant())
+                try
                 {
-                    case "/SERVICE":
-                        RunService();
-                        break;
-                    case "/INSTALL":
-                        ServiceInstallHelper.Install();
-                        break;
-                    case "/UNINSTALL":
-                        ServiceInstallHelper.Uninstall();
-                        break;
-                    default:
-                        ShowHelp();
-                        Console.WriteLine("BTAF.Service /INSTALL|/UNINSTALL|/CONFIG");
-                        break;
+                    switch (args[0].ToUpperInvariant())
+                    {
+                        case "/SERVICE":
+                            RunService();
+                            break;
+                        case "/INSTALL":
+                            ServiceInstallHelper.Install();
+                            break;
+                        case "/UNINSTALL":
+                            ServiceInstallHelper.Uninstall();
+                            break;
+                        default:
+                            ShowHelp();
+                            MessageBox.Show(@"BTAF.Service [/INSTALL|/UNINSTALL]
+
+This is not a command line utility. Simply double click the executable to open the configuration window",
+                                "BTAF Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Failed to perform the requested action.\r\n{ex.Message}", ex.GetType().Name,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 return;
             }
