@@ -52,3 +52,22 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 
 [UninstallRun]
 Filename: "{app}\{#MyAppExeName}"; Parameters: "/UNINSTALL"; RunOnceId: "DelService"; Flags: runascurrentuser
+
+; 1. Delete config.bin from the application directory if the user wants to
+; 2. Force removal of the application directory if it's empty after the uninstall process completes (inno setup is too stupid to do it by itself)
+[Code]
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+begin
+  if CurUninstallStep = usUninstall then
+  begin
+    if FileExists(ExpandConstant('{app}\config.bin')) then
+      if TaskDialogMsgBox('Delete BTAF configuration file?', 'If you are permanently removing this application, delete the configuration. Otherwise it should be kept', mbInformation, MB_YESNO, ['Delete configuration', 'Keep configuration'], 0) = IDYES
+      then
+        DeleteFile(ExpandConstant('{app}\config.bin'));
+  end;
+  if CurUninstallStep = usPostUninstall then
+  begin
+    if DirExists(ExpandConstant('{app}')) then
+      DelTree(ExpandConstant('{app}'), True, False, False);
+  end;
+end;
